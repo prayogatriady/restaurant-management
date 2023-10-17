@@ -8,7 +8,7 @@ import (
 )
 
 type ItemRepository interface {
-	// ItemList(pagination *model.Pagination) (contacts []*model.Item, totalRows int64, err error)
+	ItemList(ctx context.Context) (items []*item_model.ItemList, err error)
 	// AddItem(contact *model.Item) (err error)
 	// EditItem(contact *model.Item) (err error)
 	// DeleteItem(contactId int) (err error)
@@ -25,6 +25,19 @@ func NewItemRepository(db *gorm.DB) ItemRepository {
 	return &itemRepository{
 		Db: db,
 	}
+}
+
+func (r *itemRepository) ItemList(ctx context.Context) (items []*item_model.ItemList, err error) {
+
+	query := `
+	select mi.id, mi.name, mi.description, mi.price, mc.name as category_name, mi.is_active 
+	from m_item mi
+	join m_category mc 
+	on mi.category_id = mc.id ;
+	`
+	err = r.Db.WithContext(ctx).Raw(query).Scan(&items).Error
+	return
+
 }
 
 func (r *itemRepository) AddBulkItems(ctx context.Context, items []*item_model.Item) (err error) {

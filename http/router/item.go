@@ -13,6 +13,7 @@ func RouterItem(routerCfg *RouterConfig) {
 
 	itemGroup := routerCfg.Api.Group("/item")
 
+	itemGroup.GET("/itemList", InjecttItem(routerCfg).ItemList)
 	itemGroup.POST("/addBulkCategories", InjecttItem(routerCfg).AddBulkCategories)
 	itemGroup.POST("/addBulkItems", InjecttItem(routerCfg).AddBulkItems)
 }

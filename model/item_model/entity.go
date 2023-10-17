@@ -18,6 +18,15 @@ type Item struct {
 	DeletedAt   gorm.DeletedAt
 }
 
+type ItemList struct {
+	Id           int
+	Name         string
+	Description  string
+	Price        int
+	CategoryName string
+	IsActive     bool
+}
+
 type Category struct {
 	Id          int
 	Name        string

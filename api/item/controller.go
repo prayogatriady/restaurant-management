@@ -11,6 +11,8 @@ import (
 )
 
 type ItemController interface {
+	ItemList(c *gin.Context)
+
 	AddBulkCategories(c *gin.Context)
 	AddBulkItems(c *gin.Context)
 }
@@ -23,6 +25,21 @@ func NewItemController(itemService ItemService) ItemController {
 	return &itemController{
 		itemService: itemService,
 	}
+}
+
+func (ic *itemController) ItemList(c *gin.Context) {
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	response, data := ic.itemService.ItemList(ctx)
+	httpresponse.BaseResponse(&httpresponse.HttpParams{
+		GinContext:  c,
+		Data:        data,
+		StatusCode:  response.Status,
+		ServiceName: "ItemList",
+		Errors:      response.Errors,
+	})
 }
 
 func (ic *itemController) AddBulkCategories(c *gin.Context) {
