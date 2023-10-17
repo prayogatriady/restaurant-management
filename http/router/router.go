@@ -17,5 +17,5 @@ func ApiRoutes(routerCfg *RouterConfig) {
 	routerCfg.Api = api
 
 	// RouterPing(routerCfg)
-	// RouterUser(routerCfg)
+	RouterItem(routerCfg)
 }

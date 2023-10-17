@@ -1,5 +1,104 @@
 package item
 
-type ItemService interface{}
+import (
+	"context"
+	"fmt"
+	"math/rand"
+	"net/http"
 
-type itemService struct{}
+	"github.com/prayogatriady/restaurant-management/model"
+	"github.com/prayogatriady/restaurant-management/model/item_model"
+)
+
+type ItemService interface {
+	AddBulkCategories(ctx context.Context) (response *model.BaseResponse, data *item_model.AddBulkCategoriesResponse)
+	AddBulkItems(ctx context.Context, request *item_model.AddBulkItemsRequest) (response *model.BaseResponse, data *item_model.AddBulkItemsResponse)
+}
+
+type itemService struct {
+	itemRepository ItemRepository
+}
+
+func NewItemService(repo ItemRepository) ItemService {
+	return &itemService{
+		itemRepository: repo,
+	}
+}
+
+var categoriesDummy = []string{"Ramen", "Sushi", "Udon", "Beverage"}
+
+func (s *itemService) AddBulkCategories(ctx context.Context) (response *model.BaseResponse, data *item_model.AddBulkCategoriesResponse) {
+
+	var categories []*item_model.Category
+	var statusCode int = http.StatusOK
+	var message string = "Successfully added"
+	var errors interface{}
+
+	for _, category := range categoriesDummy {
+		categories = append(categories, &item_model.Category{
+			Name:        category,
+			Description: fmt.Sprintf("Description of %s", category),
+		})
+	}
+
+	err := s.itemRepository.AddBulkCategories(ctx, categories)
+	if err != nil {
+		statusCode = http.StatusInternalServerError
+		message = ""
+		errors = err.Error()
+	}
+
+	response = &model.BaseResponse{
+		Status: statusCode,
+		Errors: errors,
+	}
+
+	data = &item_model.AddBulkCategoriesResponse{
+		Message: message,
+	}
+
+	return response, data
+}
+
+func (s *itemService) AddBulkItems(ctx context.Context, request *item_model.AddBulkItemsRequest) (response *model.BaseResponse, data *item_model.AddBulkItemsResponse) {
+
+	var items []*item_model.Item
+	var statusCode int = http.StatusOK
+	var message string = "Successfully added"
+	var errors interface{}
+
+	pricesDummy := []int{10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000}
+
+	for catIdx, category := range categoriesDummy {
+		for i := 1; i <= request.ItemAmount; i++ {
+
+			randomIndex := rand.Intn(len(pricesDummy))
+
+			items = append(items, &item_model.Item{
+				Name:        fmt.Sprintf("%s %d", category, i),
+				Description: fmt.Sprintf("Description of %s %d", category, i),
+				Price:       pricesDummy[randomIndex],
+				CategoryId:  catIdx + 1,
+				IsActive:    true,
+			})
+		}
+	}
+
+	err := s.itemRepository.AddBulkItems(ctx, items)
+	if err != nil {
+		statusCode = http.StatusInternalServerError
+		message = ""
+		errors = err.Error()
+	}
+
+	response = &model.BaseResponse{
+		Status: statusCode,
+		Errors: errors,
+	}
+
+	data = &item_model.AddBulkItemsResponse{
+		Message: message,
+	}
+
+	return response, data
+}
