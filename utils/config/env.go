@@ -37,7 +37,7 @@ func InitEnv() {
 
 	config.App.Port = GetEnv("PORT", "8000")
 	config.App.Mode = GetEnv("MODE", "local")
-	config.App.AppName = GetEnv("APP_NAME", "Restaurant ")
+	config.App.AppName = GetEnv("APP_NAME", "Restaurant-Management")
 	config.App.AppVersion = GetEnv("APP_VERSION", "1.0.0")
 	config.App.Timezone = GetEnv("TIMEZONE", "Asia/Jakarta")
 	config.Http.Secret = GetEnv("SECRET", "")

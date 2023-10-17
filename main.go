@@ -71,6 +71,6 @@ func gracefulShutdown(server *http.Server) {
 	if err := server.Shutdown(ctx); err != nil {
 		log.Println("Server forced to shutdown:", err)
 	} else {
-		log.Println("Server gracefully stopped 🔴")
+		log.Println("Server is stopped gracefully 🔴")
 	}
 }

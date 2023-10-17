@@ -11,21 +11,21 @@ import (
 )
 
 type HttpParams struct {
-	GinContext   *gin.Context
-	Data         interface{}
-	Payload      interface{}
-	StatusCode   int
-	ServiceName  string
-	ErrorMessage string
+	GinContext  *gin.Context
+	Data        interface{}
+	Payload     interface{}
+	StatusCode  int
+	ServiceName string
+	Errors      interface{}
 }
 
 type Response struct {
-	Status       int         `json:"status"`
-	Data         interface{} `json:"data"`
-	ErrorMessage string      `json:"error_message"`
-	AppName      string      `json:"app_name"`
-	AppVersion   string      `json:"app_version"`
-	CurrentTime  string      `json:"current_time"`
+	Code        int         `json:"code"`
+	Data        interface{} `json:"data"`
+	Errors      interface{} `json:"errors"`
+	AppName     string      `json:"app_name"`
+	AppVersion  string      `json:"app_version"`
+	CurrentTime string      `json:"current_time"`
 }
 
 func BaseResponse(httpParams *HttpParams) {
@@ -45,22 +45,22 @@ func BaseResponse(httpParams *HttpParams) {
 		return
 	}
 
-	log.Printf("%s | %s | %s | %d | %s | %s | %s \n",
+	log.Printf("%s | %s | %s | %d | %s | %s | %v \n",
 		currentTimeNew,
 		httpParams.ServiceName,
 		httpParams.GinContext.Request.Host+httpParams.GinContext.Request.URL.Path,
 		httpParams.StatusCode,
 		payload,
 		data,
-		httpParams.ErrorMessage)
+		httpParams.Errors)
 
 	response := Response{
-		Status:       httpParams.StatusCode,
-		Data:         httpParams.Data,
-		ErrorMessage: httpParams.ErrorMessage,
-		AppName:      appConfig.App.AppName,
-		AppVersion:   appConfig.App.AppVersion,
-		CurrentTime:  currentTimeNew,
+		Code:        httpParams.StatusCode,
+		Data:        httpParams.Data,
+		Errors:      httpParams.Errors,
+		AppName:     appConfig.App.AppName,
+		AppVersion:  appConfig.App.AppVersion,
+		CurrentTime: currentTimeNew,
 	}
 
 	httpParams.GinContext.JSON(http.StatusOK, &response)

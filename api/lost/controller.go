@@ -19,9 +19,9 @@ func LostInSpace(c *gin.Context) {
 	}
 
 	httpresponse.BaseResponse(&httpresponse.HttpParams{
-		GinContext:   c,
-		StatusCode:   http.StatusOK,
-		ServiceName:  "LostInSpace",
-		ErrorMessage: fmt.Sprintf("No Route: %s", errorMessage),
+		GinContext:  c,
+		StatusCode:  http.StatusOK,
+		ServiceName: "LostInSpace",
+		Errors:      fmt.Sprintf("No Route: %s", errorMessage),
 	})
 }

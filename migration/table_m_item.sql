@@ -1,0 +1,17 @@
+CREATE TABLE m_item (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    description VARCHAR(100),
+    price INT NOT NULL DEFAULT 0,
+    quantity INT NOT NULL DEFAULT 0,
+    category_id BIGINT NOT NULL,
+    is_active BOOLEAN NOT NULL DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP DEFAULT NULL,
+    INDEX (id),
+    PRIMARY KEY (id)
+);
+
+ALTER TABLE m_item
+ADD CONSTRAINT fk_category FOREIGN KEY (category_id) REFERENCES m_category(id);
