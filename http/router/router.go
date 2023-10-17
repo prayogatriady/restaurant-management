@@ -18,4 +18,5 @@ func ApiRoutes(routerCfg *RouterConfig) {
 
 	// RouterPing(routerCfg)
 	RouterItem(routerCfg)
+	RouterOrder(routerCfg)
 }
