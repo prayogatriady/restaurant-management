@@ -119,6 +119,7 @@ func (s *itemService) AddBulkItems(ctx context.Context, request *item_model.AddB
 				Name:        fmt.Sprintf("%s %d", category, i),
 				Description: fmt.Sprintf("Description of %s %d", category, i),
 				Price:       pricesDummy[randomIndex],
+				Quantity:    rand.Intn(20) + 21, // random integer between 21 and 40
 				CategoryId:  catIdx + 1,
 				IsActive:    true,
 			})

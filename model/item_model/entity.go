@@ -11,6 +11,7 @@ type Item struct {
 	Name        string
 	Description string
 	Price       int
+	Quantity    int
 	CategoryId  int
 	IsActive    bool
 	CreatedAt   time.Time
@@ -23,6 +24,7 @@ type ItemList struct {
 	Name         string
 	Description  string
 	Price        int
+	Quantity     int
 	CategoryName string
 	IsActive     bool
 }

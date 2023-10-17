@@ -30,7 +30,7 @@ func NewItemRepository(db *gorm.DB) ItemRepository {
 func (r *itemRepository) ItemList(ctx context.Context) (items []*item_model.ItemList, err error) {
 
 	query := `
-	select mi.id, mi.name, mi.description, mi.price, mc.name as category_name, mi.is_active 
+	select mi.id, mi.name, mi.description, mi.price, mi.quantity, mc.name as category_name, mi.is_active 
 	from m_item mi
 	join m_category mc 
 	on mi.category_id = mc.id ;
