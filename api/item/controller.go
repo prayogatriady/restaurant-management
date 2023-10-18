@@ -13,8 +13,8 @@ import (
 type ItemController interface {
 	ItemList(c *gin.Context)
 
-	AddBulkCategories(c *gin.Context)
-	AddBulkItems(c *gin.Context)
+	GenDummyCategories(c *gin.Context)
+	GenDummyItems(c *gin.Context)
 }
 
 type itemController struct {
@@ -42,45 +42,45 @@ func (ic *itemController) ItemList(c *gin.Context) {
 	})
 }
 
-func (ic *itemController) AddBulkCategories(c *gin.Context) {
+func (ic *itemController) GenDummyCategories(c *gin.Context) {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	response, data := ic.itemService.AddBulkCategories(ctx)
+	response, data := ic.itemService.GenDummyCategories(ctx)
 	httpresponse.BaseResponse(&httpresponse.HttpParams{
 		GinContext:  c,
 		Data:        data,
 		StatusCode:  response.Status,
-		ServiceName: "AddBulkCategories",
+		ServiceName: "GenDummyCategories",
 		Errors:      response.Errors,
 	})
 }
 
-func (ic *itemController) AddBulkItems(c *gin.Context) {
+func (ic *itemController) GenDummyItems(c *gin.Context) {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	var request item_model.AddBulkItemsRequest
+	var request item_model.GenDummyItemsRequest
 	if err := c.BindJSON(&request); err != nil {
 		c.Status(http.StatusBadRequest)
 		httpresponse.BaseResponse(&httpresponse.HttpParams{
 			GinContext:  c,
 			Data:        nil,
 			StatusCode:  http.StatusBadRequest,
-			ServiceName: "AddBulkItems",
+			ServiceName: "GenDummyItems",
 			Errors:      "Bad Request",
 		})
 		return
 	}
 
-	response, data := ic.itemService.AddBulkItems(ctx, &request)
+	response, data := ic.itemService.GenDummyItems(ctx, &request)
 	httpresponse.BaseResponse(&httpresponse.HttpParams{
 		GinContext:  c,
 		Data:        data,
 		StatusCode:  response.Status,
-		ServiceName: "AddBulkItems",
+		ServiceName: "GenDummyItems",
 		Errors:      response.Errors,
 	})
 }

@@ -1,10 +1,10 @@
 package item_model
 
-type AddBulkItemsResponse struct {
+type GenDummyItemsResponse struct {
 	Message string `json:"message"`
 }
 
-type AddBulkCategoriesResponse struct {
+type GenDummyCategoriesResponse struct {
 	Message string `json:"message"`
 }
 

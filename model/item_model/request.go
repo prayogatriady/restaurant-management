@@ -1,5 +1,5 @@
 package item_model
 
-type AddBulkItemsRequest struct {
+type GenDummyItemsRequest struct {
 	ItemAmount int `json:"item_amount"`
 }

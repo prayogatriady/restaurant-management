@@ -13,8 +13,8 @@ import (
 type ItemService interface {
 	ItemList(ctx context.Context) (response *model.BaseResponse, data []*item_model.ItemListResponse)
 
-	AddBulkCategories(ctx context.Context) (response *model.BaseResponse, data *item_model.AddBulkCategoriesResponse)
-	AddBulkItems(ctx context.Context, request *item_model.AddBulkItemsRequest) (response *model.BaseResponse, data *item_model.AddBulkItemsResponse)
+	GenDummyCategories(ctx context.Context) (response *model.BaseResponse, data *item_model.GenDummyCategoriesResponse)
+	GenDummyItems(ctx context.Context, request *item_model.GenDummyItemsRequest) (response *model.BaseResponse, data *item_model.GenDummyItemsResponse)
 }
 
 type itemService struct {
@@ -68,7 +68,7 @@ func (s *itemService) ItemList(ctx context.Context) (response *model.BaseRespons
 
 var categoriesDummy = []string{"Ramen", "Sushi", "Udon", "Beverage"}
 
-func (s *itemService) AddBulkCategories(ctx context.Context) (response *model.BaseResponse, data *item_model.AddBulkCategoriesResponse) {
+func (s *itemService) GenDummyCategories(ctx context.Context) (response *model.BaseResponse, data *item_model.GenDummyCategoriesResponse) {
 
 	var categories []*item_model.Category
 	var statusCode int = http.StatusOK
@@ -82,7 +82,7 @@ func (s *itemService) AddBulkCategories(ctx context.Context) (response *model.Ba
 		})
 	}
 
-	err := s.itemRepository.AddBulkCategories(ctx, categories)
+	err := s.itemRepository.GenDummyCategories(ctx, categories)
 	if err != nil {
 		statusCode = http.StatusInternalServerError
 		message = ""
@@ -94,14 +94,14 @@ func (s *itemService) AddBulkCategories(ctx context.Context) (response *model.Ba
 		Errors: errors,
 	}
 
-	data = &item_model.AddBulkCategoriesResponse{
+	data = &item_model.GenDummyCategoriesResponse{
 		Message: message,
 	}
 
 	return response, data
 }
 
-func (s *itemService) AddBulkItems(ctx context.Context, request *item_model.AddBulkItemsRequest) (response *model.BaseResponse, data *item_model.AddBulkItemsResponse) {
+func (s *itemService) GenDummyItems(ctx context.Context, request *item_model.GenDummyItemsRequest) (response *model.BaseResponse, data *item_model.GenDummyItemsResponse) {
 
 	var items []*item_model.Item
 	var statusCode int = http.StatusOK
@@ -126,7 +126,7 @@ func (s *itemService) AddBulkItems(ctx context.Context, request *item_model.AddB
 		}
 	}
 
-	err := s.itemRepository.AddBulkItems(ctx, items)
+	err := s.itemRepository.GenDummyItems(ctx, items)
 	if err != nil {
 		statusCode = http.StatusInternalServerError
 		message = ""
@@ -138,7 +138,7 @@ func (s *itemService) AddBulkItems(ctx context.Context, request *item_model.AddB
 		Errors: errors,
 	}
 
-	data = &item_model.AddBulkItemsResponse{
+	data = &item_model.GenDummyItemsResponse{
 		Message: message,
 	}
 

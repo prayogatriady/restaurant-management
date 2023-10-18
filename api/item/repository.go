@@ -13,8 +13,8 @@ type ItemRepository interface {
 	// EditItem(contact *model.Item) (err error)
 	// DeleteItem(contactId int) (err error)
 
-	AddBulkCategories(ctx context.Context, categories []*item_model.Category) (err error)
-	AddBulkItems(ctx context.Context, items []*item_model.Item) (err error)
+	GenDummyCategories(ctx context.Context, categories []*item_model.Category) (err error)
+	GenDummyItems(ctx context.Context, items []*item_model.Item) (err error)
 }
 
 type itemRepository struct {
@@ -40,12 +40,12 @@ func (r *itemRepository) ItemList(ctx context.Context) (items []*item_model.Item
 
 }
 
-func (r *itemRepository) AddBulkItems(ctx context.Context, items []*item_model.Item) (err error) {
+func (r *itemRepository) GenDummyItems(ctx context.Context, items []*item_model.Item) (err error) {
 	err = r.Db.WithContext(ctx).Table("m_item").Create(&items).Error
 	return
 }
 
-func (r *itemRepository) AddBulkCategories(ctx context.Context, categories []*item_model.Category) (err error) {
+func (r *itemRepository) GenDummyCategories(ctx context.Context, categories []*item_model.Category) (err error) {
 	err = r.Db.WithContext(ctx).Table("m_category").Create(&categories).Error
 	return
 }
