@@ -3,7 +3,6 @@ package httpresponse
 import (
 	"encoding/json"
 	"log"
-	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -63,5 +62,5 @@ func BaseResponse(httpParams *HttpParams) {
 		CurrentTime: currentTimeNew,
 	}
 
-	httpParams.GinContext.JSON(http.StatusOK, &response)
+	httpParams.GinContext.JSON(httpParams.StatusCode, &response)
 }
