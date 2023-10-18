@@ -20,4 +20,5 @@ func ApiRoutes(routerCfg *RouterConfig) {
 	RouterItem(routerCfg)
 	RouterOrder(routerCfg)
 	RouterBill(routerCfg)
+	RouterReport(routerCfg)
 }
