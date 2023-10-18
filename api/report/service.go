@@ -72,6 +72,14 @@ func (s *reportService) CreateReport(
 
 	}
 
+	if err := s.reportRepository.UpdateReportedBill(ctx); err != nil {
+		response = &model.BaseResponse{
+			Status: http.StatusInternalServerError,
+			Errors: err.Error(),
+		}
+		return
+	}
+
 	reports, err := s.reportRepository.FindReports(ctx)
 	if err != nil {
 		response = &model.BaseResponse{
