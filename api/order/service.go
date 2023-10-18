@@ -72,7 +72,7 @@ func (s *orderService) CreateOrder(
 	}
 
 	response = &model.BaseResponse{
-		Status: http.StatusAccepted,
+		Status: http.StatusCreated,
 	}
 
 	data = &order_model.CreateOrderResponse{

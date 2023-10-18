@@ -71,7 +71,7 @@ var categoriesDummy = []string{"Ramen", "Sushi", "Udon", "Beverage"}
 func (s *itemService) GenDummyCategories(ctx context.Context) (response *model.BaseResponse, data *item_model.GenDummyCategoriesResponse) {
 
 	var categories []*item_model.Category
-	var statusCode int = http.StatusOK
+	var statusCode int = http.StatusCreated
 	var message string = "Successfully added"
 	var errors interface{}
 
@@ -104,7 +104,7 @@ func (s *itemService) GenDummyCategories(ctx context.Context) (response *model.B
 func (s *itemService) GenDummyItems(ctx context.Context, request *item_model.GenDummyItemsRequest) (response *model.BaseResponse, data *item_model.GenDummyItemsResponse) {
 
 	var items []*item_model.Item
-	var statusCode int = http.StatusOK
+	var statusCode int = http.StatusCreated
 	var message string = "Successfully added"
 	var errors interface{}
 
